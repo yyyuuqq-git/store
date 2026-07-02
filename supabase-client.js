@@ -2,8 +2,8 @@
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 
 // 기본 설정 변수 (사용자가 여기에 직접 입력할 수도 있고, UI 상에서 설정하여 localStorage에 저장할 수도 있습니다.)
-const DEFAULT_SUPABASE_URL = 'https://dkafnyxxbenoaldruoub.supabase.co'; 
-const DEFAULT_SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRrYWZueXh4YmVub2FsZHJ1b3ViIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI5NDM0NTYsImV4cCI6MjA5ODUxOTQ1Nn0.8esKTrTQXSfdRtfisoTU65VEPQrRBByAcLkjR_9o4F4';
+const DEFAULT_SUPABASE_URL = 'https://akuhwcdoinfnqpslxqow.supabase.co'; 
+const DEFAULT_SUPABASE_ANON_KEY = 'sb_publishable_A0y6unG1oksAg2uYOCIRdQ_x1u0wxvE';
 
 export let supabase = null;
 
