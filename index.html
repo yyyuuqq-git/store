@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BUSAN GO - 부산 자유여행 관광투어 가이드</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- 상단 네비게이션 헤더 -->
+    <header>
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <span class="logo-icon"></span>
+                BUSAN GO
+            </a>
+            
+            <nav>
+                <a href="#tour-spots-section" class="nav-link active">추천 관광명소</a>
+                <a href="#course-planner-section" class="nav-link">코스 플래너</a>
+            </nav>
+
+            <div class="auth-nav">
+                <!-- 로그아웃 상태일 때 보임 -->
+                <button id="btn-login" class="btn" data-variant="primary" data-size="sm">로그인 / 회원가입</button>
+                
+                <!-- 로그인 상태일 때 보임 -->
+                <div id="user-badge" class="user-badge dropdown hidden">
+                    <button class="dropdown-trigger" id="btn-user-dropdown" style="background: none; border: none; display: flex; align-items: center; gap: 0.5rem; cursor: pointer; padding: 0.25rem 0.5rem; border-radius: var(--radius-sm); transition: background 0.2s;">
+                        <div id="user-avatar" class="user-avatar">U</div>
+                        <span id="user-name-span" class="user-name-text" style="color: var(--text-main); font-weight: 600; font-size: 0.9rem;">사용자</span>
+                        <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg" style="opacity: 0.7; color: var(--text-main);">
+                            <path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                    <ul class="dropdown-menu" id="user-dropdown-menu">
+                        <li><a href="#" id="dropdown-my-info">👤 내 정보</a></li>
+                        <li><a href="#planner-result" id="dropdown-saved-planner">💾 저장된 여행 플래너</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a href="#" id="dropdown-logout" style="color: var(--text-muted);">로그아웃</a></li>
+                        <li><a href="#" id="dropdown-delete-account" style="color: var(--accent);">회원탈퇴</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 메인 콘텐츠 영역 -->
+    <main>
+        
+        <!-- 히어로 섹션 -->
+        <section class="hero-section">
+            <h1 class="hero-title">Feel the Wave of<br><span>Beautiful Busan</span></h1>
+            <p class="hero-subtitle">부산 현지 관광 가이드가 안내하는 완벽한 자유여행. 푸른 바다, 낭만적인 밤야경, 독창적인 골목길 문화와 오감을 자극하는 다채로운 맛집 투어를 시작하세요!</p>
+        </section>
+
+        <!-- 추천 관광명소 섹션 -->
+        <section id="tour-spots-section" style="scroll-margin-top: 100px;">
+            <h2 class="section-title">추천 관광 명소</h2>
+            
+            <!-- 카테고리 필터 탭 -->
+            <div class="filter-container">
+                <div class="filter-tabs">
+                    <button class="filter-btn active" data-filter="all">전체</button>
+                    <button class="filter-btn" data-filter="beach">바다/해변</button>
+                    <button class="filter-btn" data-filter="culture">문화/역사</button>
+                    <button class="filter-btn" data-filter="food">쇼핑/맛집</button>
+                    <button class="filter-btn" data-filter="nature">자연/힐링</button>
+                </div>
+            </div>
+
+            <div class="tour-grid">
+                <!-- 명소 1 -->
+                <div class="tour-card" data-category="beach" data-variant="featured">
+                    <div class="tour-img-container">
+                        <!-- 광안대교 및 바다 SVG -->
+                        <svg class="tour-img" viewBox="0 0 100 100" width="100%" height="100%" preserveAspectRatio="none">
+                            <defs>
+                                <linearGradient id="grad-ocean" x1="0%" y1="0%" x2="0%" y2="100%">
+                                    <stop offset="0%" stop-color="#001a33" />
+                                    <stop offset="50%" stop-color="#004080" />
+                                    <stop offset="100%" stop-color="#0099ff" />
+                                </linearGradient>
+                                <linearGradient id="grad-sky" x1="0%" y1="0%" x2="0%" y2="100%">
+                                    <stop offset="0%" stop-color="#000d1a" />
+                                    <stop offset="100%" stop-color="#001a33" />
+                                </linearGradient>
+                            </defs>
+                            <rect x="0" y="0" width="100" height="50" fill="url(#grad-sky)" />
+                            <rect x="0" y="50" width="100" height="50" fill="url(#grad-ocean)" />
+                            <!-- 광안대교 현수교 라인 -->
+                            <path d="M0,45 Q25,30 50,45 Q75,30 100,45" fill="none" stroke="#ff9800" stroke-width="1.5" />
+                            <!-- 주탑 -->
+                            <line x1="25" y1="20" x2="25" y2="50" stroke="#cccccc" stroke-width="2" />
+                            <line x1="75" y1="20" x2="75" y2="50" stroke="#cccccc" stroke-width="2" />
+                            <!-- 교량 상판 -->
+                            <line x1="0" y1="45" x2="100" y2="45" stroke="#ffffff" stroke-width="1" />
+                            <!-- 불빛들 -->
+                            <circle cx="25" cy="20" r="1.5" fill="#ffeb3b" />
+                            <circle cx="75" cy="20" r="1.5" fill="#ffeb3b" />
+                            <circle cx="50" cy="45" r="1" fill="#00ff00" />
+                            <circle cx="10" cy="45" r="1" fill="#ff00ff" />
+                            <circle cx="90" cy="45" r="1" fill="#ff00ff" />
+                            <!-- 노을/달 -->
+                            <circle cx="85" cy="15" r="4" fill="#ff9800" opacity="0.8" />
+                        </svg>
+                    </div>
+                    <div class="tour-info">
+                        <span class="tour-tag">바다 / 야경</span>
+                        <h3 class="tour-name">광안리 해수욕장 & 광안대교</h3>
+                        <p class="tour-desc">부산을 대표하는 밤바다의 명소로, 매시간 화려하게 빚어지는 광안대교의 LED 조명 쇼와 해변 버스킹 공연을 자유롭게 즐길 수 있는 대표 여행지입니다.</p>
+                        <button class="tour-btn btn" data-variant="accent" data-size="sm">상세 정보 보기</button>
+                    </div>
+                </div>
+
+                <!-- 명소 2 -->
+                <div class="tour-card" data-category="culture">
+                    <div class="tour-img-container">
+                        <!-- 감천문화마을 SVG -->
+                        <svg class="tour-img" viewBox="0 0 100 100" width="100%" height="100%" preserveAspectRatio="none">
+                            <defs>
+                                <linearGradient id="grad-sunset" x1="0%" y1="0%" x2="0%" y2="100%">
+                                    <stop offset="0%" stop-color="#ff3300" />
+                                    <stop offset="50%" stop-color="#ff9933" />
+                                    <stop offset="100%" stop-color="#ffcc66" />
+                                </linearGradient>
+                            </defs>
+                            <rect x="0" y="0" width="100" height="100" fill="url(#grad-sunset)" />
+                            <!-- 알록달록한 집들 -->
+                            <rect x="5" y="60" width="20" height="40" fill="#4caf50" rx="2" />
+                            <rect x="10" y="70" width="12" height="10" fill="#ffffff" opacity="0.3" />
+                            <rect x="27" y="50" width="22" height="50" fill="#2196f3" rx="2" />
+                            <polygon points="25,50 38,40 51,50" fill="#ff5722" />
+                            <rect x="52" y="55" width="20" height="45" fill="#e91e63" rx="2" />
+                            <rect x="75" y="45" width="20" height="55" fill="#ffeb3b" rx="2" />
+                            <polygon points="73,45 85,35 97,45" fill="#795548" />
+                            <!-- 길목 라인 -->
+                            <path d="M0,90 Q40,80 100,95" fill="none" stroke="#555" stroke-width="2" />
+                            <!-- 어린왕자 실루엣 -->
+                            <circle cx="40" cy="40" r="3" fill="#ffffff" />
+                            <path d="M38,43 L42,43 L40,48 Z" fill="#ffffff" />
+                        </svg>
+                    </div>
+                    <div class="tour-info">
+                        <span class="tour-tag">문화 / 골목길</span>
+                        <h3 class="tour-name">감천문화마을</h3>
+                        <p class="tour-desc">산자락을 따라 아기자기하게 들어선 파스텔톤 집들과 미로 같은 골목길, 그리고 어린왕자 포토존이 기다리는 아름다운 예술 마을입니다.</p>
+                        <button class="tour-btn btn" data-variant="secondary" data-size="sm">상세 정보 보기</button>
+                    </div>
+                </div>
+
+                <!-- 명소 3 -->
+                <div class="tour-card" data-category="food" data-variant="featured">
+                    <div class="tour-img-container">
+                        <!-- 자갈치시장 SVG -->
+                        <svg class="tour-img" viewBox="0 0 100 100" width="100%" height="100%" preserveAspectRatio="none">
+                            <defs>
+                                <linearGradient id="grad-sea" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#006699" />
+                                    <stop offset="100%" stop-color="#00ccff" />
+                                </linearGradient>
+                            </defs>
+                            <rect x="0" y="0" width="100" height="100" fill="url(#grad-sea)" />
+                            <!-- 건물 랜드마크 갈매기 지붕 -->
+                            <path d="M10,60 Q25,45 40,60 Q55,45 70,60 Q85,45 90,60 L90,100 L10,100 Z" fill="#ffffff" opacity="0.9" />
+                            <!-- 배 -->
+                            <path d="M15,80 L45,80 L38,90 L22,90 Z" fill="#ff5722" />
+                            <line x1="30" y1="80" x2="30" y2="65" stroke="#333" stroke-width="1.5" />
+                            <polygon points="30,65 40,68 30,72" fill="#ffeb3b" />
+                            <!-- 파도 -->
+                            <path d="M0,92 Q25,88 50,92 Q75,88 100,92" fill="none" stroke="#0099ff" stroke-width="1.5" />
+                            <!-- 하늘 날아다니는 갈매기 -->
+                            <path d="M20,30 Q25,25 30,30" fill="none" stroke="#ffffff" stroke-width="1.5" />
+                            <path d="M30,30 Q35,25 40,30" fill="none" stroke="#ffffff" stroke-width="1.5" />
+                        </svg>
+                    </div>
+                    <div class="tour-info">
+                        <span class="tour-tag">식도락 / 시장</span>
+                        <h3 class="tour-name">자갈치시장 & BIFF거리</h3>
+                        <p class="tour-desc">부산 아지매들의 정겨운 사투리와 활력 넘치는 수산물 시장, 남포동 씨앗호떡과 떡볶이 등 길거리 음식을 마음껏 맛보는 필수 먹방 코스입니다.</p>
+                        <button class="tour-btn btn" data-variant="accent" data-size="sm">상세 정보 보기</button>
+                    </div>
+                </div>
+
+                <!-- 명소 4 -->
+                <div class="tour-card" data-category="nature">
+                    <div class="tour-img-container">
+                        <!-- 태종대 SVG -->
+                        <svg class="tour-img" viewBox="0 0 100 100" width="100%" height="100%" preserveAspectRatio="none">
+                            <defs>
+                                <linearGradient id="grad-sky-nature" x1="0%" y1="0%" x2="0%" y2="100%">
+                                    <stop offset="0%" stop-color="#4a90e2" />
+                                    <stop offset="100%" stop-color="#b8e986" />
+                                </linearGradient>
+                            </defs>
+                            <rect x="0" y="0" width="100" height="100" fill="url(#grad-sky-nature)" />
+                            <!-- 절벽 -->
+                            <path d="M0,70 L40,65 L60,80 L100,75 L100,100 L0,100 Z" fill="#8b572a" />
+                            <path d="M10,73 L35,68 L50,83 L100,80" fill="none" stroke="#5c3c1e" stroke-width="2" />
+                            <!-- 등대 -->
+                            <rect x="75" y="45" width="8" height="30" fill="#ffffff" />
+                            <polygon points="73,45 79,38 85,45" fill="#d0021b" />
+                            <polygon points="79,42 0,20 0,50" fill="#ffffff" opacity="0.25" />
+                            <!-- 소나무 -->
+                            <circle cx="15" cy="60" r="10" fill="#417505" />
+                            <circle cx="28" cy="58" r="8" fill="#417505" />
+                            <line x1="15" y1="70" x2="15" y2="75" stroke="#5c3c1e" stroke-width="2" />
+                            <line x1="28" y1="65" x2="28" y2="72" stroke="#5c3c1e" stroke-width="2" />
+                        </svg>
+                    </div>
+                    <div class="tour-info">
+                        <span class="tour-tag">자연 / 힐링</span>
+                        <h3 class="tour-name">태종대 유원지</h3>
+                        <p class="tour-desc">울창한 숲과 깎아지른 절벽 아래 펼쳐지는 푸른 바다의 조화. 다누비 열차를 타고 신선대와 태종대 등대 전망대에서 바다를 감상해 보세요.</p>
+                        <button class="tour-btn btn" data-variant="secondary" data-size="sm">상세 정보 보기</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 코스 플래너 섹션 -->
+        <section id="course-planner-section" class="planner-card" style="scroll-margin-top: 100px; margin-top: 5rem;">
+            <h2 class="profile-title" style="font-size: 1.8rem; margin-bottom: 0.5rem;">🎒 나만의 맞춤형 자유여행 코스 플래너</h2>
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 2rem; line-height: 1.6;">
+                여행 일정과 선호하시는 여행 테마를 선택해 주세요. 현지 가이드가 선정한 명소들과 최적의 동선이 타임라인 형태로 자동 생성됩니다.
+            </p>
+            
+            <form id="form-planner" class="planner-form">
+                <div class="form-group">
+                    <label class="form-label" for="planner-duration">여행 기간</label>
+                    <div class="select-wrapper">
+                        <select id="planner-duration" class="form-select" required>
+                            <option value="1">알찬 당일치기 코스</option>
+                            <option value="2" selected>여유로운 1박 2일 코스</option>
+                            <option value="3">힐링 가득 2박 3일 코스</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="planner-style">여행 테마</label>
+                    <div class="select-wrapper">
+                        <select id="planner-style" class="form-select" required>
+                            <option value="healing" selected>바다 & 휴양 (힐링 코스)</option>
+                            <option value="activity">체험 & 액티비티 (다이내믹 코스)</option>
+                            <option value="food">식도락 & 쇼핑 (맛방 코스)</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+            
+            <div style="text-align: center;">
+                <button id="btn-generate-course" class="btn" data-variant="primary" data-size="lg" style="min-width: 220px;">
+                    ✨ 맞춤 코스 추천받기
+                </button>
+            </div>
+
+            <!-- 추천 코스 결과 노출 영역 (동적 활성화) -->
+            <div id="planner-result" class="planner-result hidden">
+                <h3 class="result-title">
+                    <span id="result-badge">1박 2일 • 힐링 코스</span>
+                    🌊 추천 자유여행 코스 타임라인
+                </h3>
+                
+                <div id="timeline-container" class="timeline">
+                    <!-- 코스 데이터가 JavaScript에 의해 동적으로 들어갑니다. -->
+                </div>
+                
+                <div class="planner-actions" style="margin-top: 2rem; text-align: center;">
+                    <button id="btn-save-course" class="btn" data-variant="accent" data-size="md">
+                        💾 내 여행 코스로 북마크에 저장
+                    </button>
+                </div>
+
+                <!-- 연계 서비스 바로가기 패널 -->
+                <div class="linked-services-panel" style="margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid var(--border-color); text-align: left;">
+                    <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.8rem; color: var(--text-main); display: flex; align-items: center; gap: 0.5rem;">
+                        🔗 실시간 부산 여행 연계 서비스
+                    </h4>
+                    <p style="color: var(--text-muted); font-size: 0.8rem; margin-bottom: 1.25rem; line-height: 1.5;">
+                        추천받으신 일정에 맞추어 기차 예매, 시티투어 버스 예약 및 숙소와 특가 액티비티를 원스톱으로 준비하세요.
+                    </p>
+                    <div class="services-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem;">
+                        <a href="https://www.letskorail.com/" target="_blank" class="service-card" style="display: flex; align-items: center; gap: 0.75rem; padding: 0.85rem 1.1rem; background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); border-radius: var(--radius-sm); text-decoration: none; color: var(--text-main);">
+                            <span style="font-size: 1.5rem;">🚄</span>
+                            <div>
+                                <strong style="font-size: 0.85rem; display: block; margin-bottom: 0.15rem; color: var(--text-main);">KTX / SRT 열차 예매</strong>
+                                <span style="font-size: 0.75rem; color: var(--text-muted);">코레일 공식 홈페이지 이동</span>
+                            </div>
+                        </a>
+                        <a href="http://www.citytourbusan.com/" target="_blank" class="service-card" style="display: flex; align-items: center; gap: 0.75rem; padding: 0.85rem 1.1rem; background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); border-radius: var(--radius-sm); text-decoration: none; color: var(--text-main);">
+                            <span style="font-size: 1.5rem;">🚌</span>
+                            <div>
+                                <strong style="font-size: 0.85rem; display: block; margin-bottom: 0.15rem; color: var(--text-main);">부산 시티투어버스 예약</strong>
+                                <span style="font-size: 0.75rem; color: var(--text-muted);">순환형 테마 코스 티켓 예매</span>
+                            </div>
+                        </a>
+                        <a href="https://www.klook.com/ko/city/27-busan-things-to-do/" target="_blank" class="service-card" style="display: flex; align-items: center; gap: 0.75rem; padding: 0.85rem 1.1rem; background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); border-radius: var(--radius-sm); text-decoration: none; color: var(--text-main);">
+                            <span style="font-size: 1.5rem;">🎫</span>
+                            <div>
+                                <strong style="font-size: 0.85rem; display: block; margin-bottom: 0.15rem; color: var(--text-main);">액티비티 & 패스</strong>
+                                <span style="font-size: 0.75rem; color: var(--text-muted);">클룩(Klook) 관광명소 티켓</span>
+                            </div>
+                        </a>
+                        <a href="https://www.yanolja.com/" target="_blank" class="service-card" style="display: flex; align-items: center; gap: 0.75rem; padding: 0.85rem 1.1rem; background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); border-radius: var(--radius-sm); text-decoration: none; color: var(--text-main);">
+                            <span style="font-size: 1.5rem;">🏨</span>
+                            <div>
+                                <strong style="font-size: 0.85rem; display: block; margin-bottom: 0.15rem; color: var(--text-main);">실시간 부산 숙소 예약</strong>
+                                <span style="font-size: 0.75rem; color: var(--text-muted);">야놀자 숙박 최저가 확인</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 모달 레이어 (로그인, 회원가입, 내정보 관리 통합) -->
+    <div id="modal-overlay" class="modal-overlay">
+        <div class="modal-box">
+            <button id="modal-close" class="modal-close">&times;</button>
+            
+            <!-- 탭 1: 로그인 (Login) -->
+            <div id="tab-login" class="form-tab-container active">
+                <div class="auth-header">
+                    <h2 class="auth-title">Welcome Back</h2>
+                    <p class="auth-subtitle">계정에 로그인하여 나만의 여행 코스를 저장하고 관리하세요.</p>
+                </div>
+                <form id="form-login">
+                    <div class="form-group">
+                        <label class="form-label" for="login-email">이메일 주소</label>
+                        <input type="email" id="login-email" class="form-input" placeholder="name@domain.com" required autocomplete="username">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="login-password">비밀번호</label>
+                        <input type="password" id="login-password" class="form-input" placeholder="••••••••" required autocomplete="current-password">
+                    </div>
+                    <div class="form-footer" style="justify-content: space-between; gap: 1rem;">
+                        <span id="link-to-findid" class="form-link">아이디 찾기</span>
+                        <span id="link-to-findpw" class="form-link">비밀번호 재설정</span>
+                    </div>
+                    <button type="submit" class="btn btn-submit" data-variant="primary" data-size="md">로그인</button>
+                </form>
+                <div class="form-footer" style="justify-content: center; margin-top: 2rem; color: var(--text-muted);">
+                    계정이 없으신가요? &nbsp;<span id="link-to-signup" class="form-link">회원가입</span>
+                </div>
+            </div>
+
+            <!-- 탭 2: 회원가입 (Sign Up) -->
+            <div id="tab-signup" class="form-tab-container hidden">
+                <div class="auth-header">
+                    <h2 class="auth-title">Create Account</h2>
+                    <p class="auth-subtitle">부산 자유여행 가이드 멤버십에 무료로 가입하세요.</p>
+                </div>
+                <form id="form-signup">
+                    <div class="form-group">
+                        <label class="form-label" for="signup-name">이름</label>
+                        <input type="text" id="signup-name" class="form-input" placeholder="홍길동" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="signup-phone">연락처</label>
+                        <input type="tel" id="signup-phone" class="form-input" placeholder="010-1234-5678" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="signup-email">이메일 주소 (로그인 아이디)</label>
+                        <input type="email" id="signup-email" class="form-input" placeholder="name@domain.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="signup-password">비밀번호</label>
+                        <input type="password" id="signup-password" class="form-input" placeholder="최소 6자리 이상" required autocomplete="new-password">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="signup-password-confirm">비밀번호 확인</label>
+                        <input type="password" id="signup-password-confirm" class="form-input" placeholder="비밀번호 재입력" required autocomplete="new-password">
+                    </div>
+                    <button type="submit" class="btn btn-submit" data-variant="primary" data-size="md">회원 가입</button>
+                </form>
+                <div class="form-footer" style="justify-content: center; margin-top: 2rem; color: var(--text-muted);">
+                    이미 계정이 있으신가요? &nbsp;<span id="link-to-login" class="form-link">로그인</span>
+                </div>
+            </div>
+
+            <!-- 탭 3: 아이디 찾기 (Find ID) -->
+            <div id="tab-findid" class="form-tab-container hidden">
+                <div class="auth-header">
+                    <h2 class="auth-title">Find Account ID</h2>
+                    <p class="auth-subtitle">가입 시 입력했던 이름과 연락처로 가입한 이메일을 검색합니다.</p>
+                </div>
+                <form id="form-findid">
+                    <div class="form-group">
+                        <label class="form-label" for="findid-name">이름</label>
+                        <input type="text" id="findid-name" class="form-input" placeholder="홍길동" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="findid-phone">연락처</label>
+                        <input type="tel" id="findid-phone" class="form-input" placeholder="010-1234-5678" required>
+                    </div>
+                    <button type="submit" class="btn btn-submit" data-variant="primary" data-size="md">아이디(이메일) 조회</button>
+                </form>
+                
+                <div id="findid-result" class="hidden" style="margin-top: 1.5rem; padding: 1rem; background: rgba(255,255,255,0.03); border-radius: var(--radius-sm); border: 1px dashed var(--border-color); text-align: center;">
+                    <span style="font-size: 0.85rem; color: var(--text-muted); display: block; margin-bottom: 0.25rem;">검색 결과 이메일:</span>
+                    <strong id="found-email" style="font-size: 1.05rem; color: var(--accent);">email@domain.com</strong>
+                </div>
+
+                <div class="form-footer" style="justify-content: center; margin-top: 2rem; color: var(--text-muted);">
+                    기억이 나셨나요? &nbsp;<span id="link-findid-to-login" class="form-link">로그인으로 돌아가기</span>
+                </div>
+            </div>
+
+            <!-- 탭 4: 마이페이지 (My Page) -->
+            <div id="tab-mypage-view" class="form-tab-container hidden">
+                <div class="auth-header" style="margin-bottom: 1.5rem;">
+                    <h2 class="auth-title">My Account Info</h2>
+                    <p class="auth-subtitle">회원 프로필 정보 확인 및 비밀번호 변경, 탈퇴 관리</p>
+                </div>
+                
+                <div style="margin-bottom: 2rem;">
+                    <div class="profile-info-row">
+                        <span class="profile-info-label">이메일 계정</span>
+                        <span id="profile-email" class="profile-info-value">email@domain.com</span>
+                    </div>
+                    <div class="profile-info-row">
+                        <span class="profile-info-label">이름</span>
+                        <span id="profile-name" class="profile-info-value">홍길동</span>
+                    </div>
+                    <div class="profile-info-row">
+                        <span class="profile-info-label">연락처</span>
+                        <span id="profile-phone" class="profile-info-value">010-1234-5678</span>
+                    </div>
+                </div>
+
+                <div class="profile-actions">
+                    <button id="link-change-password" class="btn" data-variant="secondary" data-size="md">🔒 비밀번호 변경</button>
+                    <button id="btn-logout" class="btn" data-variant="secondary" data-size="md">로그아웃</button>
+                </div>
+
+                <div class="danger-zone">
+                    <h4 class="danger-title">Danger Zone</h4>
+                    <p class="danger-desc">계정을 탈퇴하면 모든 저장 정보 및 개인 프로필 정보 데이터가 즉각적이고 영구적으로 삭제됩니다.</p>
+                    <button id="btn-delete-account" class="btn btn-submit" data-variant="danger" data-size="md" style="margin-top: 0;">회원 탈퇴하기</button>
+                </div>
+            </div>
+
+            <!-- 탭 5: 비밀번호 변경 (Change Password) -->
+            <div id="tab-change-password" class="form-tab-container hidden">
+                <div class="auth-header">
+                    <h2 class="auth-title">Change Password</h2>
+                    <p class="auth-subtitle">보안 강화를 위해 새로운 비밀번호로 변경해 주세요.</p>
+                </div>
+                <form id="form-change-password">
+                    <div class="form-group">
+                        <label class="form-label" for="new-password">새 비밀번호</label>
+                        <input type="password" id="new-password" class="form-input" placeholder="최소 6자리 이상" required autocomplete="new-password">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="confirm-new-password">새 비밀번호 확인</label>
+                        <input type="password" id="confirm-new-password" class="form-input" placeholder="새 비밀번호 재입력" required autocomplete="new-password">
+                    </div>
+                    <button type="submit" class="btn btn-submit" data-variant="primary" data-size="md">비밀번호 업데이트</button>
+                </form>
+                <div class="form-footer" style="justify-content: center; margin-top: 2rem; color: var(--text-muted);">
+                    <span id="link-back-to-profile" class="form-link">← 내 정보 보기로 돌아가기</span>
+                </div>
+            </div>
+
+            <!-- 탭 6: 비밀번호 재설정 (Reset Password) -->
+            <div id="tab-findpw" class="form-tab-container hidden">
+                <div class="auth-header">
+                    <h2 class="auth-title">Reset Password</h2>
+                    <p class="auth-subtitle">가입 시 등록된 이메일, 이름, 연락처를 확인하여 비밀번호를 재설정합니다.</p>
+                </div>
+                <form id="form-findpw">
+                    <div class="form-group">
+                        <label class="form-label" for="findpw-email">이메일 주소</label>
+                        <input type="email" id="findpw-email" class="form-input" placeholder="name@domain.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="findpw-name">이름</label>
+                        <input type="text" id="findpw-name" class="form-input" placeholder="홍길동" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="findpw-phone">연락처</label>
+                        <input type="tel" id="findpw-phone" class="form-input" placeholder="010-1234-5678" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="findpw-new-password">새로운 비밀번호</label>
+                        <input type="password" id="findpw-new-password" class="form-input" placeholder="최소 6자리 이상" required autocomplete="new-password">
+                    </div>
+                    <button type="submit" class="btn btn-submit" data-variant="primary" data-size="md">비밀번호 재설정 완료</button>
+                </form>
+                <div class="form-footer" style="justify-content: center; margin-top: 2rem; color: var(--text-muted);">
+                    기억이 나셨나요? &nbsp;<span id="link-findpw-to-login" class="form-link">로그인으로 돌아가기</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- 토스트 알림 메시지 영역 -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <script type="module" src="app.js"></script>
+</body>
+</html>
