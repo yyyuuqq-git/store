@@ -12,10 +12,12 @@ CREATE TABLE IF NOT EXISTS public.profiles (
 ALTER TABLE public.profiles ENABLE ROW LEVEL SECURITY;
 
 -- 정책 생성: 사용자는 자신의 프로필 정보만 읽고 쓸 수 있습니다.
+DROP POLICY IF EXISTS "사용자는 본인의 프로필만 조회할 수 있습니다." ON public.profiles;
 CREATE POLICY "사용자는 본인의 프로필만 조회할 수 있습니다." 
     ON public.profiles FOR SELECT 
     USING (auth.uid() = id);
 
+DROP POLICY IF EXISTS "사용자는 본인의 프로필만 수정할 수 있습니다." ON public.profiles;
 CREATE POLICY "사용자는 본인의 프로필만 수정할 수 있습니다." 
     ON public.profiles FOR UPDATE 
     USING (auth.uid() = id);
@@ -138,19 +140,23 @@ CREATE TABLE IF NOT EXISTS public.products (
 ALTER TABLE public.products ENABLE ROW LEVEL SECURITY;
 
 -- 정책 생성: 모든 사용자는 상품 목록을 자유롭게 조회(SELECT)할 수 있습니다.
+DROP POLICY IF EXISTS "누구나 상품 목록을 조회할 수 있습니다." ON public.products;
 CREATE POLICY "누구나 상품 목록을 조회할 수 있습니다." 
     ON public.products FOR SELECT 
     USING (true);
 
 -- 정책 생성: admin@petplanet.co.kr 이메일을 가졌거나 메타데이터 상의 역할이 admin인 사용자만 조작 가능
+DROP POLICY IF EXISTS "관리자만 상품을 추가할 수 있습니다." ON public.products;
 CREATE POLICY "관리자만 상품을 추가할 수 있습니다." 
     ON public.products FOR INSERT 
     WITH CHECK (auth.role() = 'authenticated' AND (auth.jwt()->>'email' = 'admin@petplanet.co.kr' OR auth.jwt()->'user_metadata'->>'role' = 'admin'));
 
+DROP POLICY IF EXISTS "관리자만 상품을 수정할 수 있습니다." ON public.products;
 CREATE POLICY "관리자만 상품을 수정할 수 있습니다." 
     ON public.products FOR UPDATE 
     USING (auth.role() = 'authenticated' AND (auth.jwt()->>'email' = 'admin@petplanet.co.kr' OR auth.jwt()->'user_metadata'->>'role' = 'admin'));
 
+DROP POLICY IF EXISTS "관리자만 상품을 삭제할 수 있습니다." ON public.products;
 CREATE POLICY "관리자만 상품을 삭제할 수 있습니다." 
     ON public.products FOR DELETE 
     USING (auth.role() = 'authenticated' AND (auth.jwt()->>'email' = 'admin@petplanet.co.kr' OR auth.jwt()->'user_metadata'->>'role' = 'admin'));
