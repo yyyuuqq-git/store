@@ -40,7 +40,7 @@ export function initSupabaseClient(url = null, anonKey = null) {
 initSupabaseClient();
 
 // --- 1. 회원가입 (Sign Up) ---
-export async function signUp(email, password, name, phone) {
+export async function signUp(email, password, name, phone, metadata = {}) {
     if (!supabase) throw new Error('Supabase 클라이언트가 초기화되지 않았습니다.');
     
     const { data, error } = await supabase.auth.signUp({
@@ -51,7 +51,8 @@ export async function signUp(email, password, name, phone) {
             // SQL 트리거에 의해 public.profiles 테이블로 자동 이전됩니다.
             data: {
                 name: name,
-                phone: phone
+                phone: phone,
+                ...metadata
             }
         }
     });
