@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>상품 상세 정보 - 펫플래닛</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- 상단 네비게이션 헤더 -->
+    <header>
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <span class="logo-icon"></span>
+                펫플래닛
+            </a>
+            
+            <nav aria-label="상세 네비게이션">
+                <a href="index.html" class="nav-link active">스토어 홈으로 가기</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 메인 콘텐츠 영역 -->
+    <main>
+        <!-- 히어로 섹션 (동적 상품 그래픽 및 카테고리) -->
+        <section id="detail-hero-bg" class="hero-section" style="border-radius: var(--radius-lg); margin-top: 2rem; min-height: 300px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 4rem 2rem; box-shadow: 0 10px 30px rgba(120,90,60,0.04); position: relative; overflow: hidden; border: 1px solid var(--border-color);">
+            <div id="detail-svg-container" style="width: 140px; height: 140px; margin-bottom: 1.5rem; background: rgba(255,255,255,0.85); border-radius: 50%; padding: 1.5rem; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 20px rgba(0,0,0,0.03);">
+                <!-- 동적 SVG 삽입 영역 -->
+            </div>
+            <span id="detail-category" class="tour-tag" style="font-size: 0.9rem; color: #fff; background: var(--primary); padding: 5px 16px; border-radius: 20px; margin-bottom: 1.25rem; font-weight: 700; letter-spacing: 1px;">카테고리</span>
+            <h1 id="detail-name" class="hero-title" style="margin-bottom: 0; color: var(--text-main); font-size: 2.3rem; font-weight: 800;">상품명</h1>
+        </section>
+
+        <!-- 상세 설명 및 정보 카드 -->
+        <section class="planner-card" style="margin-top: 3rem; padding: 3rem;">
+            <div style="margin-bottom: 3rem;">
+                <h2 style="font-size: 1.5rem; margin-bottom: 1.25rem; color: var(--text-main); display: flex; align-items: center; gap: 10px; font-weight: 800;">
+                    <span style="font-size: 1.5rem;">🐾</span> 상품 영양 가이드 및 상세 소개
+                </h2>
+                <p id="detail-description" style="color: var(--text-muted); font-size: 1.05rem; line-height: 1.8; white-space: pre-wrap; letter-spacing: -0.2px;">상세 설명이 들어갑니다.</p>
+            </div>
+
+            <!-- 수의사 권장 급여 팁 / 안심 가이드 -->
+            <div style="margin-bottom: 3rem; padding: 1.75rem; background: rgba(20, 85, 55, 0.04); border: 1px solid rgba(20, 85, 55, 0.1); border-radius: var(--radius-md); box-shadow: 0 4px 15px rgba(20, 85, 55, 0.02);">
+                <h3 style="font-size: 1.2rem; margin-bottom: 0.85rem; color: var(--primary); display: flex; align-items: center; gap: 8px; font-weight: 700;">
+                    💡 전문가 안심 영양 급여 & 사용 팁 (Tip)
+                </h3>
+                <p id="detail-tip" style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; font-weight: 600;">안심 가이드 내용이 들어갑니다.</p>
+            </div>
+
+            <!-- 세부 쇼핑 정보 -->
+            <div class="planner-form" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-bottom: 3.5rem;">
+                <div style="padding: 1.5rem; background: rgba(255, 255, 255, 0.8); border-radius: var(--radius-md); border: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 0.5rem;">
+                    <strong style="color: var(--primary); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 700;">🎯 권장 사용 및 급여 대상</strong>
+                    <span id="detail-target" style="font-size: 0.95rem; color: var(--text-main); font-weight: 600; line-height: 1.5;">대상 정보</span>
+                </div>
+                <div style="padding: 1.5rem; background: rgba(255, 255, 255, 0.8); border-radius: var(--radius-md); border: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 0.5rem;">
+                    <strong style="color: var(--primary); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 700;">💵 펫플래닛 특별 혜택가</strong>
+                    <div style="display: flex; flex-direction: column;">
+                        <span id="detail-original-price" style="font-size: 0.82rem; color: var(--text-muted); text-decoration: line-through;">기존가</span>
+                        <div style="display: flex; align-items: baseline; gap: 6px;">
+                            <span id="detail-discount-rate" style="font-size: 1.1rem; color: var(--error); font-weight: 800;">할인율</span>
+                            <span id="detail-price" style="font-size: 1.25rem; color: var(--primary); font-weight: 900; line-height: 1.5;">가격 정보</span>
+                        </div>
+                    </div>
+                </div>
+                <div style="padding: 1.5rem; background: rgba(255, 255, 255, 0.8); border-radius: var(--radius-md); border: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 0.5rem;">
+                    <strong style="color: var(--primary); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 700;">🚚 배송 방식</strong>
+                    <span id="detail-delivery" style="font-size: 0.95rem; color: var(--text-main); font-weight: 600; line-height: 1.5;">배송비 정보</span>
+                </div>
+            </div>
+
+            <!-- 작업 및 안내 링크 -->
+            <div style="text-align: center; display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap;">
+                <button id="btn-detail-add-cart" class="btn" data-variant="primary" data-size="lg" style="min-width: 240px;">
+                    🛒 장바구니에 바로 담기
+                </button>
+                <a href="index.html" class="btn" data-variant="secondary" data-size="lg" style="min-width: 160px; text-decoration: none;">
+                    이전 화면으로 가기
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- 토스트 알림 메시지 영역 -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <script type="module" src="product-detail.js"></script>
+</body>
+</html>
