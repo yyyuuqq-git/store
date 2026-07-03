@@ -16,6 +16,30 @@ import {
 
 // --- 상품 데이터셋 정의 (신규 특화처방 간식 대거 추가) ---
 let productsData = [
+    // [테스트용 임시 상품]
+    {
+        id: "temp-test-product",
+        category: "dog",
+        subCategory: "bowl",
+        subCategoryName: "테스트용 임시상품",
+        name: "[테스트] 삭제용 임시 상품 🗑️",
+        desc: "이 상품은 관리자 삭제 및 품절 테스트를 위해 제공되는 로컬 임시 상품입니다. 어드민 계정으로 로그인 후 삭제를 누르시면 메인 페이지에서 즉시 내려가고, 품절 처리를 하면 품절 상태를 확인하실 수 있습니다.",
+        originalPrice: 10000,
+        discountRate: 50,
+        price: 5000,
+        rating: 5.0,
+        reviews: 0,
+        tip: "자유롭게 삭제/품절 테스트를 진행하셔도 홈페이지와 데이터베이스에 전혀 무리가 없습니다.",
+        target: "모든 테스트 진행자",
+        delivery: "무료배송",
+        bg: "linear-gradient(135deg, #f7ece2, #e8d0bd)",
+        featured: true,
+        isSoldOut: false,
+        svg: `<svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="25" y="25" width="50" height="50" rx="10" fill="var(--error)" opacity="0.8"/>
+                <text x="50" y="55" fill="white" font-size="12" font-weight="bold" text-anchor="middle">TEST</text>
+              </svg>`
+    },
     // 1. 강아지 용품
     {
         id: "dog-bowl-1",
