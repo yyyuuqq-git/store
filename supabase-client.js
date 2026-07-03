@@ -211,7 +211,8 @@ export async function fetchProducts() {
             delivery: p.delivery,
             bg: p.bg || 'linear-gradient(135deg, #f5f0eb, #e3d3c4)',
             svg: p.svg,
-            featured: p.rating >= 4.9
+            featured: p.rating >= 4.9,
+            isSoldOut: p.is_sold_out || false
         }));
     } catch (e) {
         console.warn('상품 테이블 조회 중 오류 (로컬 더미 폴백 작동):', e);
@@ -240,12 +241,41 @@ export async function insertProduct(productData) {
         target: productData.target,
         delivery: productData.delivery,
         bg: productData.bg,
-        svg: productData.svg
+        svg: productData.svg,
+        is_sold_out: productData.isSoldOut || false
     };
 
     const { data, error } = await supabase
         .from('products')
         .insert([dbData])
+        .select();
+        
+    if (error) throw error;
+    return data;
+}
+
+// --- 11. 관리자 상품 삭제 (Supabase products 테이블) ---
+export async function deleteProduct(id) {
+    if (!supabase) throw new Error('Supabase 클라이언트가 초기화되지 않았습니다.');
+    
+    const { data, error } = await supabase
+        .from('products')
+        .delete()
+        .eq('id', id)
+        .select();
+        
+    if (error) throw error;
+    return data;
+}
+
+// --- 12. 관리자 상품 품절 상태 토글 (Supabase products 테이블) ---
+export async function toggleProductSoldOut(id, isSoldOut) {
+    if (!supabase) throw new Error('Supabase 클라이언트가 초기화되지 않았습니다.');
+    
+    const { data, error } = await supabase
+        .from('products')
+        .update({ is_sold_out: isSoldOut })
+        .eq('id', id)
         .select();
         
     if (error) throw error;

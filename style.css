@@ -1539,3 +1539,27 @@ footer {
     background: rgba(20, 85, 55, 0.12) !important;
 }
 
+/* 품절 표시 스타일링 */
+.tour-card.sold-out {
+    border-color: rgba(220, 50, 50, 0.2);
+    box-shadow: none;
+}
+.tour-card.sold-out::after {
+    content: 'SOLD OUT';
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-15deg);
+    background: rgba(220, 50, 50, 0.95);
+    color: white;
+    padding: 0.4rem 0.8rem;
+    font-weight: 800;
+    font-size: 1.1rem;
+    border-radius: var(--radius-sm);
+    letter-spacing: 2px;
+    z-index: 10;
+    pointer-events: none;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+    border: 2px solid white;
+}
+

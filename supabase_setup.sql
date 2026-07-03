@@ -133,6 +133,7 @@ CREATE TABLE IF NOT EXISTS public.products (
     delivery TEXT,
     bg TEXT,
     svg TEXT,
+    is_sold_out BOOLEAN NOT NULL DEFAULT FALSE,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc'::text, NOW()) NOT NULL
 );
 

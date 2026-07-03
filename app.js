@@ -9,7 +9,9 @@ import {
     getCurrentUserProfile,
     resetPasswordByIdentity,
     fetchProducts,
-    insertProduct
+    insertProduct,
+    deleteProduct,
+    toggleProductSoldOut
 } from './supabase-client.js';
 
 // --- 상품 데이터셋 정의 (신규 특화처방 간식 대거 추가) ---
@@ -840,12 +842,14 @@ async function updateAuthUI() {
             elements.dropdownAdminPanel.classList.add('hidden');
             currentUser = null;
         }
+        renderFilteredProducts();
     } catch (err) {
         console.error('인증 UI 업데이트 실패:', err);
         elements.btnLogin.classList.remove('hidden');
         elements.userBadge.classList.add('hidden');
         elements.dropdownAdminPanel.classList.add('hidden');
         currentUser = null;
+        renderFilteredProducts();
     }
 }
 
@@ -1182,20 +1186,44 @@ function renderFilteredProducts() {
         return;
     }
     
+    const isAdmin = currentUser && (currentUser.email === 'admin@petplanet.co.kr' || currentUser.role === 'admin');
+    
     filtered.forEach(p => {
         const card = document.createElement('div');
         card.className = 'tour-card';
         if (p.featured) card.setAttribute('data-variant', 'featured');
+        if (p.isSoldOut) card.classList.add('sold-out');
         
         const starHTML = '★'.repeat(Math.floor(p.rating)) + (p.rating % 1 !== 0 ? '☆' : '');
+        
+        // 품절 시 뱃지 및 버튼 비활성화 분기 처리
+        const soldOutBadge = p.isSoldOut ? `<span class="p-badge soldout" style="background: var(--error); color: white;">품절</span>` : '';
+        const cartButtonDisabled = p.isSoldOut ? 'disabled style="flex: 1.2; font-size: 0.8rem; padding: 0.5rem; opacity: 0.6; cursor: not-allowed;"' : 'style="flex: 1.2; font-size: 0.8rem; padding: 0.5rem;"';
+        const cartButtonText = p.isSoldOut ? '품절 🚫' : '장바구니 🛒';
+        
+        // 어드민 액션 버튼 추가
+        let adminActionsHTML = '';
+        if (isAdmin) {
+            adminActionsHTML = `
+                <div class="admin-card-actions" style="display: flex; gap: 0.5rem; width: 100%; margin-top: 0.5rem; border-top: 1px dashed var(--border-color); padding-top: 0.5rem; pointer-events: auto;">
+                    <button class="btn btn-admin-soldout" style="flex: 1; font-size: 0.75rem; padding: 0.35rem 0.5rem; background: var(--warning); color: var(--text-dark); cursor: pointer; border: none; border-radius: var(--radius-sm);" data-id="${p.id}">
+                        ${p.isSoldOut ? '🟢 판매재개' : '🔴 품절처리'}
+                    </button>
+                    <button class="btn btn-admin-delete" style="flex: 1; font-size: 0.75rem; padding: 0.35rem 0.5rem; background: var(--error); color: white; cursor: pointer; border: none; border-radius: var(--radius-sm);" data-id="${p.id}">
+                        🗑️ 삭제
+                    </button>
+                </div>
+            `;
+        }
         
         card.innerHTML = `
             <div class="product-badges">
                 ${p.featured ? `<span class="p-badge best">인기</span>` : ''}
                 ${p.discountRate > 0 ? `<span class="p-badge discount">${p.discountRate}% 세일</span>` : ''}
                 ${p.category === 'snack' ? `<span class="p-badge organic">특화처방</span>` : ''}
+                ${soldOutBadge}
             </div>
-            <div class="tour-img-container">
+            <div class="tour-img-container" style="${p.isSoldOut ? 'filter: grayscale(1) opacity(0.5);' : ''}">
                 ${p.svg}
             </div>
             <div class="tour-info">
@@ -1222,16 +1250,65 @@ function renderFilteredProducts() {
                 
                 <div style="display: flex; gap: 0.5rem; width: 100%;">
                     <button class="btn btn-detail" data-variant="secondary" data-size="sm" style="flex: 1; font-size: 0.8rem; padding: 0.5rem;" data-id="${p.id}">🔍 상세 정보</button>
-                    <button class="btn btn-add-cart" data-variant="primary" data-size="sm" style="flex: 1.2; font-size: 0.8rem; padding: 0.5rem;" data-id="${p.id}">장바구니 🛒</button>
+                    <button class="btn btn-add-cart" data-variant="primary" data-size="sm" ${cartButtonDisabled} data-id="${p.id}">${cartButtonText}</button>
                 </div>
+                ${adminActionsHTML}
             </div>
         `;
         
         card.querySelector('.btn-detail').addEventListener('click', () => handleProductDetailClick(p.id));
-        card.querySelector('.btn-add-cart').addEventListener('click', () => addToCart(p.id));
+        if (!p.isSoldOut) {
+            card.querySelector('.btn-add-cart').addEventListener('click', () => addToCart(p.id));
+        }
+        
+        if (isAdmin) {
+            card.querySelector('.btn-admin-soldout').addEventListener('click', (e) => {
+                e.stopPropagation();
+                handleAdminToggleSoldOut(p.id, !p.isSoldOut);
+            });
+            card.querySelector('.btn-admin-delete').addEventListener('click', (e) => {
+                e.stopPropagation();
+                handleAdminDeleteProduct(p.id);
+            });
+        }
         
         elements.productGrid.appendChild(card);
     });
+}
+
+// --- 관리자 상품 삭제 핸들러 ---
+async function handleAdminDeleteProduct(id) {
+    if (!confirm('정말로 이 상품을 삭제하시겠습니까? 데이터베이스에서 완전히 삭제됩니다.')) return;
+    
+    try {
+        await deleteProduct(id);
+        showToast('🗑️ 상품이 성공적으로 삭제되었습니다.', 'success');
+        
+        // 로컬 productsData 배열에서도 제거
+        productsData = productsData.filter(p => p.id !== id);
+        renderFilteredProducts();
+    } catch (err) {
+        console.error('상품 삭제 실패:', err);
+        showToast(`❌ 상품 삭제 실패: ${err.message}`, 'error');
+    }
+}
+
+// --- 관리자 상품 품절상태 토글 핸들러 ---
+async function handleAdminToggleSoldOut(id, targetSoldOutState) {
+    try {
+        await toggleProductSoldOut(id, targetSoldOutState);
+        showToast(targetSoldOutState ? '🚫 상품이 품절 처리되었습니다.' : '🟢 상품 판매가 재개되었습니다.', 'success');
+        
+        // 로컬 productsData 배열의 상태 갱신
+        const prod = productsData.find(p => p.id === id);
+        if (prod) {
+            prod.isSoldOut = targetSoldOutState;
+        }
+        renderFilteredProducts();
+    } catch (err) {
+        console.error('품절 상태 업데이트 실패:', err);
+        showToast(`❌ 상태 업데이트 실패: ${err.message}`, 'error');
+    }
 }
 
 // --- 반려동물 종류에 맞춰 세부 품종 및 건강 고민 동적 로딩 ---
@@ -1460,9 +1537,10 @@ async function loadSupabaseProducts() {
     try {
         const dbProducts = await fetchProducts();
         if (dbProducts && dbProducts.length > 0) {
-            const localIds = productsData.map(p => p.id);
-            const freshProducts = dbProducts.filter(p => !localIds.includes(p.id));
-            productsData = [...freshProducts, ...productsData];
+            const dbIds = dbProducts.map(p => p.id);
+            // DB에 등록된 상품은 DB 정보(품절 여부 포함)로 최신화하고, DB에 없는 로컬 데이터셋만 남겨서 합칩니다.
+            const remainingLocal = productsData.filter(p => !dbIds.includes(p.id));
+            productsData = [...dbProducts, ...remainingLocal];
             renderFilteredProducts();
         }
     } catch (e) {
