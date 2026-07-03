@@ -153,11 +153,15 @@ export async function getCurrentUserProfile() {
             id: user.id,
             email: user.email,
             username: user.user_metadata?.name || '사용자',
-            phone: user.user_metadata?.phone || ''
+            phone: user.user_metadata?.phone || '',
+            role: user.user_metadata?.role || 'user'
         };
     }
     
-    return data;
+    return {
+        ...data,
+        role: user.user_metadata?.role || 'user'
+    };
 }
 
 // --- 8. 비밀번호 찾기 및 재설정 (Reset Password by Identity) ---
