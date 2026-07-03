@@ -35,11 +35,34 @@
 
 ---
 
-## 🛠️ 기술 스택 (Tech Stack)
+## 🛠️ 기술 스택 상세 (Tech Stack Details)
 
-* **Frontend**: HTML5, Vanilla CSS3 (Custom Design System, Glassmorphic Glass-UI), ESM Javascript
-* **Backend & DB**: Supabase (Authentication, PostgreSQL, Row Level Security, RPC Functions & Trigger)
-* **Bundler & Tooling**: Vite
+### 1. Frontend (프론트엔드)
+* **HTML5 & ESM (ECMAScript Modules)**: 
+  * 별도의 무거운 프레임워크 없이 모듈러 자바스크립트(`import / export`) 아키텍처를 적용했습니다.
+  * [supabase-client.js](file:///c:/Users/yyyuu/Desktop/store/supabase-client.js)에 선언된 공통 API 함수들을 [app.js](file:///c:/Users/yyyuu/Desktop/store/app.js) 및 [product-detail.js](file:///c:/Users/yyyuu/Desktop/store/product-detail.js)에서 유기적으로 호출하여 코드 재사용성을 극대화했습니다.
+* **Vanilla CSS3 (Custom Design System)**:
+  * `:root` 가상 선택자를 활용하여 레이아웃 여백, 테두리 반경(`border-radius`), 색상 스키마(주색, 보조색, 경고, 오류) 등 전역 디자인 토큰을 정의해 일관된 테마를 유지했습니다.
+  * **Glassmorphic UI**: `backdrop-filter` 속성을 가미해 반투명 유리 질감의 카드 및 드롭다운 메뉴를 연출, 프리미엄한 감성의 디자인을 완성했습니다.
+  * **반응형 웹 그리드**: CSS Grid와 Flexbox를 적극 사용하여 모바일 기기부터 데스크톱 해상도까지 유연하게 대응하는 그리드 시스템을 탑재했습니다.
+
+### 2. Backend & Database (백엔드 및 데이터베이스)
+* **Supabase Client SDK (Serverless)**:
+  * ESM CDN 라이브러리를 통해 초기 로딩 성능을 최적화했으며, 단일 `createClient` 인스턴스로 회원 인증 및 테이블 조작을 연동했습니다.
+* **PostgreSQL Database**:
+  * **Profiles Table**: 유저 정보(이름, 휴대폰 번호, 이메일)를 담는 profiles 릴레이션 테이블을 구축하여 관계형 관리를 수행합니다.
+  * **Products Table**: 상품 카탈로그 및 어드민 품절 여부(`is_sold_out`)를 저장하는 테이블로, 실시간 제품 데이터를 제어합니다.
+* **Database Trigger (데이터 동기화 자동화)**:
+  * 가입(Auth.users)이 일어나는 순간 실행되는 PL/pgSQL 트리거 함수(`handle_new_user()`)를 설치하여, 보호자 이름과 휴대폰 메타데이터가 `public.profiles` 테이블로 실시간 즉시 복사 및 적재되도록 자동화했습니다.
+* **Row Level Security (RLS) 정책**:
+  * 사용자가 본인의 프로필(`auth.uid() = id`) 정보만 읽고 쓸 수 있게 차단하는 강력한 보안 정책을 수립했습니다.
+  * 상품 등록/수정/삭제 정책을 세분화하여, 오직 관리자 권한을 소유한 세션(이메일 검증 및 역할 메타데이터 `admin` 확인)만 쓰기 연산을 허용하고 일반 고객은 오직 조회(SELECT)만 가능하도록 격리했습니다.
+* **RPC (Stored Procedure - 보안 함수)**:
+  * 사용자 본인의 계정 즉시 탈퇴(`delete_own_account`), 안전한 아이디 찾기(`find_email_by_name_and_phone`), 3가지 조건 일치 시 비밀번호 암호화 업데이트(`reset_password_by_identity`) 등 민감한 비즈니스 로직을 데이터베이스 서버 내부에 보안 프로시저로 격리하여 클라이언트 공격 노출을 원천 방지했습니다.
+
+### 3. Bundler & Development Tooling (개발 도구)
+* **Vite**:
+  * ESM 방식의 초고속 로컬 HMR(Hot Module Replacement) 개발 서버를 활용하여 코딩 시 실시간 변화를 브라우저에 0.1초 만에 갱신 및 반영하며, Rollup 빌드를 이용해 상용 프로덕션 번들을 효율적으로 최적화합니다.
 
 ---
 
