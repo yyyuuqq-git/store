@@ -1,3 +1,6 @@
+-- 0. 비밀번호 암호화용 pgcrypto 확장 기능 활성화
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
+
 -- 1. 프로필 테이블 생성 (profiles)
 -- auth.users 테이블과 1:1 관계를 맺으며, 유저 정보가 삭제되면 자동 삭제(ON DELETE CASCADE)됩니다.
 CREATE TABLE IF NOT EXISTS public.profiles (
