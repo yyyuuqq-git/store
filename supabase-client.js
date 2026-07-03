@@ -16,6 +16,14 @@ export function initSupabaseClient(url = null, anonKey = null) {
     if (storageUrl === 'undefined' || storageUrl === 'null' || !storageUrl) storageUrl = null;
     if (storageKey === 'undefined' || storageKey === 'null' || !storageKey) storageKey = null;
 
+    // 만약 코드상의 기본 URL이 로컬 스토리지에 저장된 URL과 다르면 로컬 스토리지를 초기화하여 새로운 프로젝트 설정을 사용합니다.
+    if (storageUrl && storageUrl !== DEFAULT_SUPABASE_URL) {
+        storageUrl = null;
+        storageKey = null;
+        localStorage.removeItem('supabase_url');
+        localStorage.removeItem('supabase_anon_key');
+    }
+
     const finalUrl = url || storageUrl || DEFAULT_SUPABASE_URL;
     const finalKey = anonKey || storageKey || DEFAULT_SUPABASE_ANON_KEY;
 
